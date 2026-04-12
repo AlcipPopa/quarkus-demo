@@ -1,21 +1,21 @@
 package cloud.in.coding;
 
-import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Optional;
 
 @Slf4j
+@AllArgsConstructor
 @Path("/api/v1/books")
 @Produces(MediaType.APPLICATION_JSON)
 public class BookResource {
-    @Inject
     BookRepository bookRepository;
 
     @GET
