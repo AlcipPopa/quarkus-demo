@@ -1,4 +1,4 @@
-package cloud.in.coding;
+package cloud.in.coding.data_access;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import org.eclipse.microprofile.config.inject.ConfigProperty;

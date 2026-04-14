@@ -1,5 +1,10 @@
-package cloud.in.coding;
+package cloud.in.coding.infra;
 
+import cloud.in.coding.data_access.Book;
+import cloud.in.coding.data_access.BookRepository;
+import cloud.in.coding.exceptions.NotFoundException;
+import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
@@ -9,7 +14,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @AllArgsConstructor
@@ -18,11 +22,13 @@ import java.util.Optional;
 public class BookResource {
     BookRepository bookRepository;
 
+    @PermitAll
     @GET
     public List<Book> getBooks() {
         return bookRepository.getAllBooks();
     }
 
+    @RolesAllowed("my-custom-role-here")
     @GET
     @Path("/count")
     @Produces(MediaType.TEXT_PLAIN)
@@ -33,7 +39,8 @@ public class BookResource {
 
     @GET
     @Path("/{id}")
-    public Optional<Book> getBook(@PathParam("id") int id) {
-        return getBooks().stream().filter(b -> b.getId() == id).findFirst();
+    public Book getBook(@PathParam("id") int id) {
+        return getBooks().stream().filter(b -> b.getId() == id).findFirst()
+                .orElseThrow(() -> new NotFoundException("Book " +  id + " not found"));
     }
 }

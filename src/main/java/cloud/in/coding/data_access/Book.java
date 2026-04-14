@@ -1,4 +1,4 @@
-package cloud.in.coding;
+package cloud.in.coding.data_access;
 
 
 import lombok.AllArgsConstructor;
